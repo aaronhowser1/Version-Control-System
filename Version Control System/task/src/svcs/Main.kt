@@ -18,26 +18,22 @@ var trackedFiles : List<String>
     set(value) = indexFile.writeText(value.joinToString("\n"))
     get() = indexFile.readLines()
 
-fun main(launchArgs: Array<String>) {
+fun main(args: Array<String>) {
+    println(args.joinToString(" "))
+    println("test")
+    if (args.firstOrNull() == "--help") {
+        help()
+    }
 
     while (true) {
-        if (launchArgs.firstOrNull() == "--help") {
-            help()
-        }
-
         val input = readln().split(" ")
         val command = input.firstOrNull()
-        val args = input - input[0]
-//        println("""
-//            Input: $input
-//            Command: $command
-//            Arguments: ${args.joinToString(" ")}
-//        """.trimIndent())
+        val commandArgs = input - input[0]
         when (command) {
-            null,"","help","--help" -> help(args.firstOrNull())
-            "config" -> config(args)
-            "add" -> add(args)
-            "log" -> log(args)
+            null,"","help","--help" -> help(commandArgs.firstOrNull())
+            "config" -> config(commandArgs)
+            "add" -> add(commandArgs)
+            "log" -> log(commandArgs)
             else -> println("'${command}' is not a SVCS command.")
         }
     }
